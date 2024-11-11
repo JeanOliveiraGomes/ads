@@ -9,7 +9,95 @@
 
     window.onload = function() {
         var mod = new bootstrap.Modal(document.getElementById("myModal"), {});
-        //mod.show(); 
+        mod.show(); 
+    }
+
+    function copiarScript() {
+      navigator.clipboard.writeText("[System.Reflection.Assembly]::LoadWithPartialName("system.windows.forms")
+Add-Type -assembly System.Windows.Forms
+
+$Day = Get-Date;
+$global:Status = $false;
+$count = 0;
+
+$timer = New-Object System.Windows.Forms.Timer
+$timer.Interval = 60000 # In milliseconds
+
+$Label = New-Object System.Windows.Forms.Label
+
+$LabelVersion = New-Object System.Windows.Forms.Label
+
+$StatusLable = New-Object System.Windows.Forms.Label
+
+$main_form = New-Object System.Windows.Forms.Form
+$main_form.BackColor = 'white';
+$main_form.Text ='Sempre Olline'
+$main_form.Width = 500
+$main_form.Height = 300
+$main_form.AutoSize = $true
+$main_form.Topmost = $true
+$main_form.StartPosition = 'CenterScreen'
+
+$StatusLable.Text = "Status: Desligado. Clique em iniciar."
+$StatusLable.Location  = New-Object System.Drawing.Point(100,150)
+$StatusLable.AutoSize = $true
+
+$LabelVersion.Text = "V3.0.0"
+$LabelVersion.Location  = New-Object System.Drawing.Point(0,0)
+$LabelVersion.AutoSize = $true
+
+$ButtonStart = New-Object System.Windows.Forms.Button
+$ButtonStart.Location = New-Object System.Drawing.Size(100,50)
+$ButtonStart.Size = New-Object System.Drawing.Size(120,50)
+$ButtonStart.Text = "Iniciar Programa e Abrir Site"
+$ButtonStart.Width = 200
+$ButtonStart.Height = 50
+
+$ButtonStop = New-Object System.Windows.Forms.Button
+$ButtonStop.Location = New-Object System.Drawing.Size(300,50)
+$ButtonStop.Size = New-Object System.Drawing.Size(120,20)
+$ButtonStop.Text = "Parar"
+$ButtonStop.Width = 100
+$ButtonStop.Height = 50
+
+
+$ButtonStop.Add_Click({
+    stopTimer
+    $count = 0;
+})
+
+$ButtonStart.Add_Click({
+  
+    $main_form.Topmost = $true
+    $Day = Get-Date;
+        if($count -eq 0){
+            #Ao abrir meu site você está me incentivando a manter o programa. Obrigado.
+            Start-Process "https://jeanoliveiragomes.github.io";
+            $timer.add_tick({runSempreOnline})
+            $count = 1;
+            startTimer
+        }
+})
+
+function startTimer { 
+   $StatusLable.Text = "Status: Em execução.";
+   $timer.start()
+}
+
+function stopTimer {
+    $StatusLable.Text = "Status: Desligado. Clique em iniciar.";
+    $timer.Enabled = $false
+}
+
+function runSempreOnline{
+    [System.Windows.Forms.SendKeys]::SendWait("{F13}");
+}
+
+$main_form.Controls.Add($ButtonStop);
+$main_form.Controls.Add($ButtonStart);
+$main_form.Controls.Add($StatusLable);
+$main_form.Controls.Add($LabelVersion);
+$main_form.ShowDialog();");
     }
   </script>
   
@@ -285,6 +373,11 @@
           <div class="row" style="width: 100%;">
             <div class="col-5">
               <a style="font-weight: bold;background-color: #1e297e !important;width: 100%;"
+                href="javascript:copiarScript()"
+                class="btn btn-success btn-lg">Copiar Script.</a>
+            </div>
+            <div class="col-5">
+              <a style="font-weight: bold;background-color: #1e297e !important;width: 100%;"
                 href="https://github.com/JeanOliveiraGomes/jeanoliveiragomes.github.io/raw/main/AlwaysON.exe"
                 class="btn btn-success btn-lg">Baixar</a>
             </div>
@@ -461,6 +554,65 @@
     <!--Fim Espaco para anuncios-->
 
     <div class="container px-4 py-5">
+      <div class="row row-cols-1 row-cols-md-2 g-5 py-5">
+        <div class="col d-flex flex-column align-items-start gap-2">
+          <h3 id="download" class="fw-bold">Executando Script</h3>
+          <p class="text-body-secondary">Para executar o scrip o primeiro passo é procurar no seu windows a ferramenta powershelISE,
+          Também é possivel utilizar o powershell comum no entanto recomendamos fortemente o uso do powershelISE para garantir que tudo funcione
+          adequadamente. Está opção é indicada para quem não consegue utilizar o executavel.</p>
+          <img src="buscaPowershell.png" style="width: 100%;">
+        </div>
+
+        <div class="col d-flex flex-column align-items-start gap-2">
+          <h3 class="fw-bold">Executando Script no PowerShellISE</h3>
+          <p class="text-body-secondary">Com o powershell aberto agora basta clicar no menu arquivo e depois em novo. Agora cole o spricpt copiado através do botão Copiar Script e cole. Depois disso basta clicar Play verde ou utlizar o botão F5 e seu script sera executado.</p>
+          <img src="abriLocalArq.png" style="width: 100%;height: 150px;">
+          <img src="softwareDesconhecido.png" style="width: 100%;height: 400px;">
+        </div>
+      </div>
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="row row-cols-1 row-cols-md-2 g-5 py-5">
+        <div class="col d-flex flex-column align-items-start gap-2">
+          <h3 id="download" class="fw-bold">Executando Script</h3>
+          <p class="text-body-secondary">O primeiro passo para executar o script é buscar no windows o PowershelIse</p>
+          <img src="browserError.png" style="width: 100%;">
+        </div>
+
+        <div class="col d-flex flex-column align-items-start gap-2">
+          <h3 class="fw-bold">Executando seu arquivo</h3>
+          <p class="text-body-secondary">Novamente o Windows pode te alertar que este é um arquivo não assinado
+            digitalmente. Pretendemos assinalo em breve, mas até la recomendamos os seguintes passos: Não execute o
+            arquivo diretamente no browser, abra o local do arquivo e de um clique duplo nele, caso o Windows o alerte
+            clique em "Mais informações" e em seguida clique em "Executar assim mesmo". Esta mensagem não aparecerá
+            outra vez</p>
+          <img src="abriLocalArq.png" style="width: 100%;height: 150px;">
+          <img src="softwareDesconhecido.png" style="width: 100%;height: 400px;">
+        </div>
+      </div>
+
+
+
+
+
+
+
+
+
+
+
+
+      
       <h2 class="pb-2 border-bottom"></h2>
 
       <div class="row row-cols-1 row-cols-md-2 g-5 py-5">
@@ -539,9 +691,9 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-        <p>Nova Versão disponível. Com vencimento ate 2025. Use o Internet Explore ou Edge caso tenha probelma em baixar com o Chrome.</p>
-        <p class="text-body-secondary">Versão Atual: V2.0.9 <br>Antes de Baixar leia nosso artigo abaixo, <a
-              href="#download">fazendo dowload</a>. Lembre-se de utilize o edge</p>
+        <p>Agora você tambem pode rodar o script caso não consiga baixar.</p>
+        <p class="text-body-secondary">Leia como executar o script. <a
+              href="#download">Caso prefira o executavel leia como fazendo dowload</a>. Lembre-se de utilize o edge</p>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
