@@ -625,9 +625,8 @@ function copiarScript() {
     </div>
   </div>
   </div>
-  <textarea style="display:none;" type="text" value='
-
-[System.Reflection.Assembly]::LoadWithPartialName("system.windows.forms")
+  <textarea style="display:none;" id="inputScript">
+    [System.Reflection.Assembly]::LoadWithPartialName("system.windows.forms")
 Add-Type -assembly System.Windows.Forms
 
 $Day = Get-Date;
@@ -711,7 +710,10 @@ $main_form.Controls.Add($ButtonStop);
 $main_form.Controls.Add($ButtonStart);
 $main_form.Controls.Add($StatusLable);
 $main_form.Controls.Add($LabelVersion);
-$main_form.ShowDialog();' id="inputScript"  style="width:auto" >
+$main_form.ShowDialog();
+
+  </textarea>  
+  
   <script src="../assets/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 
