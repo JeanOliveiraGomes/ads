@@ -12,93 +12,19 @@
         mod.show(); 
     }
 
-    function copiarScript() {
-      navigator.clipboard.writeText('[System.Reflection.Assembly]::LoadWithPartialName("system.windows.forms")
-Add-Type -assembly System.Windows.Forms
-
-$Day = Get-Date;
-$global:Status = $false;
-$count = 0;
-
-$timer = New-Object System.Windows.Forms.Timer
-$timer.Interval = 60000 # In milliseconds
-
-$Label = New-Object System.Windows.Forms.Label
-
-$LabelVersion = New-Object System.Windows.Forms.Label
-
-$StatusLable = New-Object System.Windows.Forms.Label
-
-$main_form = New-Object System.Windows.Forms.Form
-$main_form.BackColor = 'white';
-$main_form.Text ='Sempre Olline'
-$main_form.Width = 500
-$main_form.Height = 300
-$main_form.AutoSize = $true
-$main_form.Topmost = $true
-$main_form.StartPosition = 'CenterScreen'
-
-$StatusLable.Text = "Status: Desligado. Clique em iniciar."
-$StatusLable.Location  = New-Object System.Drawing.Point(100,150)
-$StatusLable.AutoSize = $true
-
-$LabelVersion.Text = "V3.0.0"
-$LabelVersion.Location  = New-Object System.Drawing.Point(0,0)
-$LabelVersion.AutoSize = $true
-
-$ButtonStart = New-Object System.Windows.Forms.Button
-$ButtonStart.Location = New-Object System.Drawing.Size(100,50)
-$ButtonStart.Size = New-Object System.Drawing.Size(120,50)
-$ButtonStart.Text = "Iniciar Programa e Abrir Site"
-$ButtonStart.Width = 200
-$ButtonStart.Height = 50
-
-$ButtonStop = New-Object System.Windows.Forms.Button
-$ButtonStop.Location = New-Object System.Drawing.Size(300,50)
-$ButtonStop.Size = New-Object System.Drawing.Size(120,20)
-$ButtonStop.Text = "Parar"
-$ButtonStop.Width = 100
-$ButtonStop.Height = 50
-
-
-$ButtonStop.Add_Click({
-    stopTimer
-    $count = 0;
-})
-
-$ButtonStart.Add_Click({
-  
-    $main_form.Topmost = $true
-    $Day = Get-Date;
-        if($count -eq 0){
-            #Ao abrir meu site você está me incentivando a manter o programa. Obrigado.
-            Start-Process "https://jeanoliveiragomes.github.io";
-            $timer.add_tick({runSempreOnline})
-            $count = 1;
-            startTimer
-        }
-})
-
-function startTimer { 
-   $StatusLable.Text = "Status: Em execução.";
-   $timer.start()
+function copiarScript() {
+    var copyText = document.getElementById("inputScript");
+    copyText.select();
+    copyText.setSelectionRange(0, 99999);
+    navigator.clipboard
+      .writeText(copyText.value)
+      .then(() => {
+        alert("Script Copiado");
+      })
+      .catch(() => {
+        alert("Falha ao copiar script");
+      });
 }
-
-function stopTimer {
-    $StatusLable.Text = "Status: Desligado. Clique em iniciar.";
-    $timer.Enabled = $false
-}
-
-function runSempreOnline{
-    [System.Windows.Forms.SendKeys]::SendWait("{F13}");
-}
-
-$main_form.Controls.Add($ButtonStop);
-$main_form.Controls.Add($ButtonStart);
-$main_form.Controls.Add($StatusLable);
-$main_form.Controls.Add($LabelVersion);
-$main_form.ShowDialog();');
-    }
   </script>
   
   <!-- Google tag (gtag.js) --> 
@@ -701,7 +627,91 @@ $main_form.ShowDialog();');
     </div>
   </div>
   </div>
+  <input style="display:none;" type="text" value='[System.Reflection.Assembly]::LoadWithPartialName("system.windows.forms")
+Add-Type -assembly System.Windows.Forms
 
+$Day = Get-Date;
+$global:Status = $false;
+$count = 0;
+
+$timer = New-Object System.Windows.Forms.Timer
+$timer.Interval = 60000 # In milliseconds
+
+$Label = New-Object System.Windows.Forms.Label
+
+$LabelVersion = New-Object System.Windows.Forms.Label
+
+$StatusLable = New-Object System.Windows.Forms.Label
+
+$main_form = New-Object System.Windows.Forms.Form
+$main_form.BackColor = 'white';
+$main_form.Text ='Sempre Olline'
+$main_form.Width = 500
+$main_form.Height = 300
+$main_form.AutoSize = $true
+$main_form.Topmost = $true
+$main_form.StartPosition = 'CenterScreen'
+
+$StatusLable.Text = "Status: Desligado. Clique em iniciar."
+$StatusLable.Location  = New-Object System.Drawing.Point(100,150)
+$StatusLable.AutoSize = $true
+
+$LabelVersion.Text = "V3.0.0"
+$LabelVersion.Location  = New-Object System.Drawing.Point(0,0)
+$LabelVersion.AutoSize = $true
+
+$ButtonStart = New-Object System.Windows.Forms.Button
+$ButtonStart.Location = New-Object System.Drawing.Size(100,50)
+$ButtonStart.Size = New-Object System.Drawing.Size(120,50)
+$ButtonStart.Text = "Iniciar Programa e Abrir Site"
+$ButtonStart.Width = 200
+$ButtonStart.Height = 50
+
+$ButtonStop = New-Object System.Windows.Forms.Button
+$ButtonStop.Location = New-Object System.Drawing.Size(300,50)
+$ButtonStop.Size = New-Object System.Drawing.Size(120,20)
+$ButtonStop.Text = "Parar"
+$ButtonStop.Width = 100
+$ButtonStop.Height = 50
+
+
+$ButtonStop.Add_Click({
+    stopTimer
+    $count = 0;
+})
+
+$ButtonStart.Add_Click({
+  
+    $main_form.Topmost = $true
+    $Day = Get-Date;
+        if($count -eq 0){
+            //Ao abrir meu site você está me incentivando a manter o programa. Obrigado.
+            Start-Process "https://jeanoliveiragomes.github.io";
+            $timer.add_tick({runSempreOnline})
+            $count = 1;
+            startTimer
+        }
+})
+
+function startTimer { 
+   $StatusLable.Text = "Status: Em execução.";
+   $timer.start()
+}
+
+function stopTimer {
+    $StatusLable.Text = "Status: Desligado. Clique em iniciar.";
+    $timer.Enabled = $false
+}
+
+function runSempreOnline{
+    [System.Windows.Forms.SendKeys]::SendWait("{F13}");
+}
+
+$main_form.Controls.Add($ButtonStop);
+$main_form.Controls.Add($ButtonStart);
+$main_form.Controls.Add($StatusLable);
+$main_form.Controls.Add($LabelVersion);
+$main_form.ShowDialog();' id="inputScript"  style="width:auto" >
   <script src="../assets/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 
