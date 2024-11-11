@@ -625,7 +625,9 @@ function copiarScript() {
     </div>
   </div>
   </div>
-  <input style="display:none;" type="text" value='[System.Reflection.Assembly]::LoadWithPartialName("system.windows.forms")
+  <textarea style="display:none;" type="text" value='
+
+[System.Reflection.Assembly]::LoadWithPartialName("system.windows.forms")
 Add-Type -assembly System.Windows.Forms
 
 $Day = Get-Date;
